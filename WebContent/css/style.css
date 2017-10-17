@@ -1,0 +1,52 @@
+body {
+    font-size:16px;
+	MARGIN-TOP:2px; MARGIN-LEFT:2px; MARGIN-RIGHT:0px;
+}
+.hidd{display:none;}
+td {
+    font-size:16px; background-color:#FFF0F5
+}
+
+table {background-color:#dbeaf5; }
+.c{border-bottom:#dbeaf5 solid 20px;}
+caption{color:#EE9A00;font-size:18px;}
+span{color:rgb(111,51,129);font-size:18px;}
+input {
+    border:1px solid #B3D7F1;
+}
+
+input.btn {border:1px solid #B3D7F1; background-color:blue; cursor:hand}
+
+.P {
+    CURSOR:hand; background-image:url(../images/toolbar.gif);
+}
+
+.T {
+    BACKGROUND-COLOR:#e9f2f8;
+		BORDER:1px solid #336699; CURSOR:hand
+}
+
+.LL {cursor:hand}
+
+.bar {
+    background-image:url(../images/toolbar.gif); height:20px; 
+	text-align:right; vertical-align:middle;
+}
+.toolbar {
+    background-image:url(../images/toolbar.gif); height:20px; 
+	text-align:center; vertical-align:middle;
+}
+
+.title1 {
+    color:#003399; background-color:#dbeaf5; height:20px; text-align:center
+}
+
+.title2 {
+    color:#003399; background-color:#dbeaf5; height:12px; text-align:center
+}
+
+a		{COLOR:#000099; TEXT-DECORATION:none}
+a:hover	{TEXT-DECORATION:underline}
+
+.requred_symbol { color:#FF0000; }
+.page{text-align:center;align:center;}
