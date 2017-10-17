@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.BikeMapper">
+<select id="brokenBikes" resultType="com.aowin.model.Bicycle" statementType="PREPARED">
+	select b.bicycle_id,b.bicycle_code,r.repair_date from bicycle_info b,repair_record r where b.bicycle_id=r.bicycle_id
+ and b.status='8' and r.repair_result='2'
+</select>
+
+<select id="newBikes" resultType="com.aowin.model.Bicycle" statementType="PREPARED">
+ 	select bicycle_id,bicycle_code from bicycle_info where status='1'
+</select>
+
+<update id="updateScrap" parameterType="int">
+	update bicycle_info set status='9' where bicycle_id=#{bicycle_id}
+</update>
+
+<insert id="buyBike" statementType="PREPARED">
+<selectKey order="BEFORE" keyProperty="bicycle_id" resultType="int">
+	select (nvl(max(bicycle_id),0)+1) bicycle_id from bicycle_info
+</selectKey>
+	insert into bicycle_info (bicycle_id,bicycle_code,status,user_id,operator_time) values (#{bicycle_id},concat('red',#{bicycle_id}),'1',
+(select user_id from bicycle_user where username=#{username}),#{operator_time})
+</insert>
+
+<select id="bikePile" parameterType="int" resultType="com.aowin.model.Bicycle">
+	select nvl(pile_id,0) pile_id,status from bicycle_info where bicycle_id=#{bicycle_id}
+</select>
+
+
+<update id="updateStatus" parameterType="com.aowin.model.Pile">
+	update bicycle_info set status='3',pile_id=#{pile_id} where bicycle_id=#{bikeId}
+</update>
+ 
+</mapper>

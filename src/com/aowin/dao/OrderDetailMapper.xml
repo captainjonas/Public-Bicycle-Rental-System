@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.OrderDetailMapper">
+ <insert id="insertDetail" parameterType="com.aowin.model.OrderDetail">
+   <selectKey order="BEFORE" keyProperty="detail_id" resultType="int">
+  	select seq_detail.nextval detail_id from dual
+  </selectKey>
+ 	insert into bicycle_order_detail values(#{detail_id},#{catagory_id},(select order_id from bicycle_order where order_code=#{order_code}),
+ (select (max(bicycle_id)+1) bicycle_id from bicycle_info),#{create_date},#{batch_no},#{price},#{remark})
+ </insert>
+</mapper>
+
+
+
+

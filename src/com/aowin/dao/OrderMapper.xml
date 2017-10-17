@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.OrderMapper">
+	<insert id="insertOrder" parameterType="com.aowin.model.Order">
+	 <selectKey order="BEFORE" keyProperty="order_id" resultType="int">
+  		select seq_order.nextval order_id from dual
+  	</selectKey>
+  	insert into bicycle_order values(#{order_id},#{order_code},#{vender_id},#{buy_date},#{buy_num},#{buy_price},
+  #{person_in_charge},#{invoice_no},(select user_id from bicycle_user where username=#{username}),#{operator_time},#{remark},'1')
+	</insert>
+	
+	<select id="selectVenders" resultType="com.aowin.model.Vender">
+		select vender_id,vender_name from vender where vender_code like 'ZXC%' order by vender_id
+	</select>
+	
+	<select id="getPileVender" resultType="com.aowin.model.Vender">
+		select vender_id,vender_name from vender where vender_code like 'CZ%' order by vender_id
+	</select>
+
+	<select id="getBuyNum" resultType="int" parameterType="String">
+		select nvl(sum(buy_num),0) from bicycle_order where buy_date &lt; '${time}'
+	</select>
+</mapper>

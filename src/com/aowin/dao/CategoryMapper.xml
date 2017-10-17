@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.CategoryMapper">
+	
+	<select id="getCategories" resultType="com.aowin.model.BikeCategory" statementType="PREPARED">
+		select * from bicycle_catagory 
+	</select>
+	
+	<select id="getDetailId" resultType="int" parameterType="int" statementType="PREPARED">
+		select count(detail_id) from bicycle_order_detail where catagory_id=#{catagory_id}
+	</select>
+	
+	<delete id="deleteCate" parameterType="int">
+		delete from bicycle_catagory where catagory_id=#{catagory_id}
+	</delete>
+  
+    <update id="updateCategory" parameterType="com.aowin.model.BikeCategory">
+     update bicycle_catagory set catagory_name=#{catagory_name},tire_type=#{tire_type},ring_type=#{ring_type},
+ backseat=#{backseat},bicycle_seat=#{bicycle_seat},user_id=(select user_id from bicycle_user where username=#{username}),operator_time
+ =#{operator_time} where catagory_id=#{catagory_id}
+    </update>
+    
+    <insert id="addCate" parameterType="com.aowin.model.BikeCategory">
+    	insert into bicycle_catagory values(((select max(catagory_id) from bicycle_catagory)+1),#{catagory_name},#{frame_type},#{tire_type},
+    #{weight},#{height},#{length},#{ring_type},#{basket},#{backseat},#{bicycle_seat},#{handBrake},#{remark},
+    (select user_id from bicycle_user where username=#{username}),#{operator_time})
+    </insert>
+</mapper>

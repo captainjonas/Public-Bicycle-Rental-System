@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.BusinessMapper">
+  <insert id="insertRecord" parameterType="com.aowin.model.Business" statementType="PREPARED">
+  <selectKey order="BEFORE" keyProperty="business_id" resultType="int">
+  	select seq_business.nextval business_id from dual
+  </selectKey>
+  insert into business values (#{business_id},#{create_time},'报废','9',(select record_id from repair_record where bicycle_id=#{bicycle_id} and repair_result='2'),'','0',0,'',#{bicycle_id},'',(select user_id from bicycle_user where username=#{username}))
+  </insert>
+  
+  <insert id="insertBuy" parameterType="com.aowin.model.Business" statementType="PREPARED">
+  <selectKey order="BEFORE" keyProperty="business_id" resultType="int">
+  	select seq_business.nextval business_id from dual
+  </selectKey>
+  insert into business values (#{business_id},#{create_time},'购入','1',(select order_id as related_record_id from bicycle_order where order_code=#{order_code}),'','1',#{fee},2,'','',(select user_id from bicycle_user where username=#{username}))
+  </insert>
+  
+ <insert id="inPile" parameterType="com.aowin.model.Business" statementType="PREPARED">
+  <selectKey order="BEFORE" keyProperty="business_id" resultType="int">
+  	select seq_business.nextval business_id from dual
+  </selectKey>
+  insert into business values (#{business_id},#{create_time},'普通调入','5',(select deploy_id as related_record_id from bicycle_deploy where bicycle_id=#{bicycle_id} and status='1'),'','0',0.00,'',#{bicycle_id},#{pile_id},(select user_id from bicycle_user where username=#{username}))
+  </insert>
+  
+</mapper>

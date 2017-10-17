@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.PileMapper">
+	<select id="selectPile" parameterType="int" resultType="com.aowin.model.Pile">
+		select v.vender_name,p.* from bicycle_pile p, vender v where p.vender_id=v.vender_id and p.station_id=#{station_id}
+	</select>
+	
+	<select id="availablePiles" parameterType="int" resultType="com.aowin.model.Pile">
+		select p.*,v.vender_name from bicycle_pile p,vender v where p.station_id=#{station_id} and p.status='2' and p.vender_id=v.vender_id
+	</select>
+	
+	<insert id="insertPile" parameterType="com.aowin.model.Pile">
+	<selectKey order="BEFORE" keyProperty="pile_id" resultType="int">
+		select (nvl(max(pile_id),0)+1) pile_id from bicycle_pile
+	</selectKey>
+	insert into bicycle_pile values (#{pile_id},#{vender_id},#{pile_code},(select station_id from bicycle_station where station_code=#{station_code}),
+	'2',#{install_time},'',(select user_id from bicycle_user where username=#{username}),#{operator_time},'',#{remark})
+	</insert>
+	
+	<delete id="deletePiles" parameterType="int">
+		delete from bicycle_pile where station_id=#{station_id}
+	</delete>
+		
+	<insert id="addPile" parameterType="com.aowin.model.Pile">
+	insert into bicycle_pile values (#{pile_id},(select vender_id from vender where vender_name=#{vender_name}),#{pile_code},#{station_id},
+	#{status},#{install_time},'',(select user_id from bicycle_user where username=#{username}),#{operator_time},#{bicycle_id},#{remark})
+	</insert>
+	
+	<select id="selectID" resultType="int">
+		select (nvl(max(pile_id),0)+1) from bicycle_pile
+	</select>
+	
+	<update id="bikein" parameterType="com.aowin.model.Pile">
+		update bicycle_pile set status='1',bicycle_id=#{bicycle_id} where pile_id=#{pile_id}
+	</update>
+</mapper>

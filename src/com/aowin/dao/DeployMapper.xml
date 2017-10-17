@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aowin.dao.DeployMapper">
+
+<insert id="insertDeploy" parameterType="com.aowin.model.Deploy">
+  <selectKey order="BEFORE" keyProperty="deploy_id" resultType="int">
+  	select seq_deploy.nextval deploy_id from dual
+  </selectKey>
+  	insert into bicycle_deploy (deploy_id,bicycle_id,to_pile_id,to_time,to_reason,status) values (#{deploy_id},#{bicycle_id},
+  	#{to_pile_id},#{to_time},'购入调入','1')
+  </insert>
+</mapper>
